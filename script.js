@@ -4,6 +4,7 @@ const people = [
     { name: 'Tommy', year: 1970 },
     { name: 'Alex', year: 2015 },
 ];
+console.table(people);
 
 const comments = [
     { text: 'Love this!', id: 523423 },
@@ -12,15 +13,30 @@ const comments = [
     { text: 'Ramen is my fav food ever', id: 123523 },
     { text: 'Nice Nice Nice!', id: 542328 },
 ];
+console.table(comments);
 
-// Some and Every Checks
-// Array.prototype.some() // is at least one person 19 or older?
-// Array.prototype.every() // is everyone 19 or older?
+// Is at least one person 18 or older?
+const isAdult = people.some(person => {
+    const currentYear = new Date().getFullYear();
+    return currentYear - person.year >= 18;
+});
+console.log({ isAdult });
 
-// Array.prototype.find()
-// Find is like filter, but instead returns just the one you are looking for
-// find the comment with the ID of 823423
+// Is everyone 18 or older?
+const areAllAdults = people.every(person => {
+    const currentYear = new Date().getFullYear();
+    return currentYear - person.year >= 18;
+});
+console.log({ areAllAdults });
 
-// Array.prototype.findIndex()
-// Find the comment with this ID
-// delete the comment with the ID of 823423
+// Find the comment with the ID of 823423
+const findCommentById = id => comments.find(comment => comment.id === id);
+const { text } = findCommentById(823423);
+console.log(`Found comment id 823423: '${text}'`);
+
+// Find the index of the comment with ID 823423 and then delete that comment
+const index = comments.findIndex(comment => comment.id === 823423);
+const result = comments.splice(index, 1);
+console.log(`Comment ID ${result[0].id} was deleted!`);
+console.table('Here is an updated comments table: ');
+console.table(comments);
